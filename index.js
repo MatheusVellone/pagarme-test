@@ -4,7 +4,8 @@ const express = require('express');
 const Sequelize = require('sequelize');
 const bodyParser = require('body-parser');
 const request = require('request-promise');
-const log = require('./src/log');
+const log = require('./src/utils/log');
+const dateISO = require('./src/utils/date').dateISO;
 
 const app = express();
 const sequelize = new Sequelize('pokemons', null, null, {
@@ -33,6 +34,15 @@ const Pokemon = sequelize.define('pokemon', {
         allowNull: true,
         defaultValue: 1,
     },
+    firstSeen: {
+        type: Sequelize.DATE,
+    },
+    lastSeen: {
+        type: Sequelize.DATE,
+    },
+    extinct: {
+        type: Sequelize.BOOLEAN,
+    },
 });
 
 Pokemon.sync({
@@ -45,14 +55,25 @@ Pokemon.sync({
 app.get('/get-pokemons', (req, res) => {
     Pokemon.findAll()
         .then((pokemons) => {
-            res.send(pokemons);
+            res.status(200).send(pokemons);
+        });
+});
+
+app.post('/create-pokemons', (req, res) => {
+    const pokemonBody = req.body;
+    pokemonBody.firstSeen = dateISO();
+    Pokemon.create(pokemonBody)
+        .then((pokemon) => {
+            res.status(201).send(pokemon);
         });
 });
 
 app.put('/create-pokemons', (req, res) => {
-    Pokemon.create(req.body)
+    const pokemonBody = req.body;
+    pokemonBody.lastSeen = dateISO();
+    Pokemon.update(pokemonBody)
         .then((pokemon) => {
-            res.send(pokemon);
+            res.status(200).send(pokemon);
         });
 });
 
