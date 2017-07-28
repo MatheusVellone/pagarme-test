@@ -12,4 +12,4 @@
 - Rotas em arquivos json
 - Show pokemon
 - Colocar em extinção (delete)
-- gulp to restart server on code change
+- nodemon to restart server on code change
