@@ -9,3 +9,6 @@
 - wrapper de rota ?
 - separar rotas em arquivos
 - Deixar público e enviar o link do repositório
+- Rotas em arquivos json
+- Show pokemon
+- Colocar em extinção (delete)
