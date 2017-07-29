@@ -2,8 +2,8 @@
 
 const Joi = require('joi');
 const Promise = require('bluebird');
-const InternalException = require('../Exceptions/InternalException');
-const ValidationException = require('../Exceptions/ValidationException');
+const InternalException = require('../Exception/InternalException');
+const ValidationException = require('../Exception/ValidationException');
 
 class Validator {
     constructor() {
@@ -17,7 +17,7 @@ class Validator {
     validate(alias, targetToValidate) {
         const schema = this._validators[alias];
         if (!schema) {
-            throw new InternalException(`Invalid validator schema ${alias} from ${this.constructor.name}`);
+            return Promise.resolve(targetToValidate);
         }
 
         const result = Joi.validate(targetToValidate, schema, {

@@ -4,9 +4,9 @@ const Exception = require('./Exception');
 const log = require('../utils/log');
 
 class InternalException extends Exception {
-    constructor(errorDetails) {
+    constructor(...errorDetails) {
         super(500, 'An internal error ocurred');
-        log.console(errorDetails);
+        log.console(...errorDetails);
     }
 }
 

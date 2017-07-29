@@ -1,80 +1,55 @@
 'use strict';
 
 const express = require('express');
-const Sequelize = require('sequelize');
 const bodyParser = require('body-parser');
 const request = require('request-promise');
 const log = require('./src/utils/log');
-const dateISO = require('./src/utils/date').dateISO;
+const appRoutes = require('./src/routes.json');
 
+const controllers = {};
 const app = express();
-const sequelize = new Sequelize('pokemons', null, null, {
-    dialect: 'sqlite',
-});
+
+const registerRoutes = (routes, prefix = '/') => {
+    Object.keys(routes).forEach((routeKey) => {
+        if (typeof routes[routeKey] === 'object') {
+            // routeKey is a route group prefix
+            registerRoutes(routes[routeKey], prefix + routeKey);
+        } else {
+            // routeKey is the VERB and path
+            const handler = routes[routeKey];
+            const [, method, route] = routeKey.match(/(.*?)\s(.*)/);
+
+            const [, controllerName, actionName] = handler.match(/(.*?)\.(.*)/);
+            const methodLowerCase = method.toLowerCase();
+
+            if (!controllers[controllerName]) {
+                const Controller = require(`./src/Controller/${controllerName}`); // eslint-disable-line
+                controllers[controllerName] = new Controller();
+            }
+
+            app[methodLowerCase](prefix + route, controllers[controllerName].appWrapper(actionName));
+        }
+    });
+};
 
 const PORT = process.env.PORT || 3000;
 
 app.use(bodyParser.json());
 
+registerRoutes(appRoutes);
+
+app.all('/help', (req, res) => {
+    res.status(200).send(app._router.stack);
+});
+
+app.all('*', (req, res) => {
+    res.status(404).send({
+        message: 'Route not found',
+    });
+});
+
 app.listen(PORT, () => {
     log.console(`Listening on http://localhost:${PORT}`);
-});
-
-const Pokemon = sequelize.define('pokemon', {
-    name: {
-        type: Sequelize.STRING,
-        allowNull: false,
-    },
-    price: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-    },
-    stock: {
-        type: Sequelize.INTEGER,
-        allowNull: true,
-        defaultValue: 1,
-    },
-    firstSeen: {
-        type: Sequelize.DATE,
-    },
-    lastSeen: {
-        type: Sequelize.DATE,
-    },
-    extinct: {
-        type: Sequelize.BOOLEAN,
-    },
-});
-
-Pokemon.sync({
-    force: true,
-})
-    .then(() => {
-        log.console('Model is ready!');
-    });
-
-app.get('/get-pokemons', (req, res) => {
-    Pokemon.findAll()
-        .then((pokemons) => {
-            res.status(200).send(pokemons);
-        });
-});
-
-app.post('/create-pokemons', (req, res) => {
-    const pokemonBody = req.body;
-    pokemonBody.firstSeen = dateISO();
-    Pokemon.create(pokemonBody)
-        .then((pokemon) => {
-            res.status(201).send(pokemon);
-        });
-});
-
-app.put('/create-pokemons', (req, res) => {
-    const pokemonBody = req.body;
-    pokemonBody.lastSeen = dateISO();
-    Pokemon.update(pokemonBody)
-        .then((pokemon) => {
-            res.status(200).send(pokemon);
-        });
 });
 
 app.post('/buy-pokemons', (req, res) => {
