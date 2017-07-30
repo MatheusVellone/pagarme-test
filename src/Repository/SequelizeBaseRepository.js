@@ -8,10 +8,10 @@ const sequelize = new Sequelize('app', null, null, {
 });
 
 class SequelizeBaseRepository extends BaseRepository {
-    constructor(structure) {
+    constructor(structureData) {
         super();
         const name = this.constructor.name.replace('Repository', '');
-        this.sequelize = sequelize.define(name, structure);
+        this.sequelize = sequelize.define(name, structureData.fields, structureData.config || {});
 
         this.ready = this.sequelize.sync({
             force: true,
@@ -20,6 +20,7 @@ class SequelizeBaseRepository extends BaseRepository {
 
     findOne(condition) {
         return this.sequelize.findOne({
+            raw: true,
             where: condition,
         });
     }

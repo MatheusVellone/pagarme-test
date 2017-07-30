@@ -12,15 +12,39 @@ class PokemonController extends Controller {
     }
 
     show(req) {
-        return this.model.extinctPokemon()
+        const pokemonNumber = req.params.id;
+        return this.model.getPokemonByNumber(pokemonNumber)
+            .then((pokemon) => {
+                return [200, {
+                    message: `Pokemon #${pokemonNumber}`,
+                    result: pokemon,
+                }];
+            });
     }
 
     create(req) {
-        return this.model.createPokemon(req.body);
+        const body = req.body;
+        return this.model.createPokemon(body)
+            .then(() => {
+                return [201, `Pokemon ${body.name} #${body.number} created`];
+            });
     }
 
     update(req) {
 
+    }
+
+    buy(req) {
+        const pokemonNumber = req.params.id;
+        const quantity = req.body.quantity;
+
+        return this.model.buyPokemon(pokemonNumber, quantity)
+            .then(() => {
+                return [
+                    200,
+                    `${quantity} pokemons bought. Thanks.`,
+                ];
+            });
     }
 
     list(req) {
@@ -28,7 +52,14 @@ class PokemonController extends Controller {
     }
 
     remove(req) {
-        return this.model.extinctPokemon(req.pokemonNumber);
+        const pokemonNumber = req.params.id;
+        return this.model.extinctPokemon(pokemonNumber)
+            .then(() => {
+                return [
+                    200,
+                    `Pokemon #${pokemonNumber} is now in extinction process and isn't available for purchasing`,
+                ];
+            });
     }
 }
 

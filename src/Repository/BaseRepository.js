@@ -12,8 +12,12 @@ class BaseRepository {
         throw new NotImplementedException(__dirname, __filename, 'create');
     }
 
-    read() {
-        throw new NotImplementedException(__dirname, __filename, 'read');
+    findOne() {
+        throw new NotImplementedException(__dirname, __filename, 'findOne');
+    }
+
+    findAll() {
+        throw new NotImplementedException(__dirname, __filename, 'findAll');
     }
 
     update() {

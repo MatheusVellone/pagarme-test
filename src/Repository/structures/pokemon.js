@@ -2,7 +2,12 @@
 
 const Sequelize = require('sequelize');
 
-module.exports = {
+module.exports.fields = {
+    number: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        primaryKey: true,
+    },
     name: {
         type: Sequelize.STRING,
         allowNull: false,
@@ -14,7 +19,7 @@ module.exports = {
     stock: {
         type: Sequelize.INTEGER,
         allowNull: true,
-        defaultValue: 1,
+        defaultValue: 0,
     },
     firstSeen: {
         type: Sequelize.DATE,
@@ -25,4 +30,8 @@ module.exports = {
     extinct: {
         type: Sequelize.BOOLEAN,
     },
+};
+
+module.exports.config = {
+    timestamps: false,
 };
