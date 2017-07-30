@@ -18,16 +18,27 @@ class PokemonValidator extends Validator {
 
         this.addValidator('show', Joi.object({
             params: {
-                id: Joi.number().required(),
+                pokemonNumber: Joi.number().required(),
             },
         }));
 
-        this.addValidator('update', Joi.object({
-
+        this.addValidator('donate', Joi.object({
+            params: {
+                pokemonNumber: Joi.number().required(),
+            },
+            body: Joi.object({
+                quantity: Joi.number().required(),
+            }),
         }));
 
         this.addValidator('get', Joi.object({
 
+        }));
+
+        this.addValidator('list', Joi.object({
+            query: {
+                page: Joi.number().integer(),
+            }
         }));
     }
 }

@@ -28,9 +28,10 @@ class PokemonModel extends Model {
         return super.create(pokemonBody);
     }
 
-    updatePokemon(pokemonBody) {
-        pokemonBody.lastSeen = dateISO();
-        return super.update(pokemonBody);
+    donatePokemon(pokemonNumber, stock) {
+        return super.update(pokemonNumber, {
+            stock: PokemonRepository.INCREMENT('stock', stock),
+        });
     }
 
     extinctPokemon(pokemonBody) {
@@ -76,7 +77,8 @@ class PokemonModel extends Model {
                     ];
                 }
 
-                return axios({
+                // TODO - remover 'mock'
+                return (Promise.reject({ response: {} }) || axios({
                     url: 'https://api.pagar.me/1/transactions',
                     method: 'POST',
                     headers: {
@@ -96,19 +98,21 @@ class PokemonModel extends Model {
                             quantity,
                         },
                     },
-                })
+                }))
+                    .catch((err) => {
+                        console.log(err.response.data);
+                        // TODO - retirar isso
+                        return {
+                            status: 'paid',
+                        };
+                    })
                     .then((body) => {
-                        console.log(body);
                         if (body.status === 'paid') {
-                            return this.updatePokemon({
-                                number: pokemonNumber,
+                            return super.update(pokemonNumber, {
                                 stock: pokemon.stock - quantity,
                             });
                         }
                         return Promise.reject(`The payment status was ${body.status}`);
-                    })
-                    .catch((err) => {
-                        console.log(err.response.data);
                     });
             });
     }
