@@ -16,5 +16,3 @@ env:
     - DB_DIALECT=sqlite
     - DB_LOGGING=false
     # PAGARME_API_KEY added to Travis via console to ensure key privacy
-before_install:
-  - mysql -e 'CREATE DATABASE pokemon;'
