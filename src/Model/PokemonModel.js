@@ -1,9 +1,9 @@
 'use strict';
 
-const axios = require('axios');
 const Model = require('./Model');
 const PokemonRepository = require('../Repository/PokemonRepository');
 const dateISO = require('../utils/date').dateISO;
+const postRequest = require('../utils/request').post;
 
 class PokemonModel extends Model {
     constructor() {
@@ -46,42 +46,44 @@ class PokemonModel extends Model {
         return this._getPokemonBy('name', name);
     }
 
-    buyPokemon(pokemonNumber, quantity, paymentData) {
+    buyPokemon(pokemonNumber, paymentBody) {
         return this.getPokemonByNumber(pokemonNumber)
             .then((pokemon) => {
                 if (pokemon.extinct) {
                     return Promise.reject(`You can't buy this pokemon because it is in extinction process. These can be the last ${pokemon.stock} ${pokemon.name}s out there.`);
                 }
 
-                if (pokemon.stock < quantity) {
+                if (pokemon.stock < paymentBody.quantity) {
                     return Promise.reject(`Not enought ${pokemon.name}s in stock. Currently have ${pokemon.stock}.`);
                 }
 
-                return axios({
-                    url: 'https://api.pagar.me/1/transactions',
-                    method: 'POST',
-                    headers: {
-                        'content-type': 'application/json',
+                const data = {
+                    api_key: process.env.PAGARME_API_KEY,
+                    amount: pokemon.price * paymentBody.quantity * 100,
+                    card_number: paymentBody.cardNumber, // '4024007138010896'
+                    card_expiration_date: paymentBody.cardExpirationDate, // '1050'
+                    card_holder_name: paymentBody.cardHolderName, // 'Ash Ketchum'
+                    card_cvv: paymentBody.cardCvv, // '123',
+                    metadata: {
+                        product: 'pokemon',
+                        name: pokemon.name,
+                        number: pokemon.number,
+                        quantity: paymentBody.quantity,
                     },
-                    data: {
-                        api_key: process.env.PAGARME_API_KEY,
-                        amount: pokemon.price * quantity * 100,
-                        card_number: paymentData.cardNumber, // '4024007138010896'
-                        card_expiration_date: paymentData.cardExpirationDate, // '1050'
-                        card_holder_name: paymentData.cardHolderName, // 'Ash Ketchum'
-                        card_cvv: paymentData.cardCvv, // '123',
-                        metadata: {
-                            product: 'pokemon',
-                            name: pokemon.name,
-                            number: pokemon.number,
-                            quantity,
-                        },
-                    },
-                })
+                };
+
+                const headers = {
+                    'content-type': 'application/json',
+                };
+
+                // TODO - use pagarme SDK
+                // https://pagarme.github.io/pagarme-js/
+                return postRequest('https://api.pagar.me/1/transactions', data, undefined, headers)
                     .then((body) => {
+                        // console.log(body);
                         if (body.status === 'paid') {
                             return super.update(pokemonNumber, {
-                                stock: pokemon.stock - quantity,
+                                stock: pokemon.stock - paymentBody.quantity,
                             });
                         }
                         return Promise.reject(`The payment failed with status '${body.status}'`);

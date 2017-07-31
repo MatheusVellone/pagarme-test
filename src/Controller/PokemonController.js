@@ -49,13 +49,13 @@ class PokemonController extends Controller {
 
     buy(req) {
         const pokemonNumber = req.params.pokemonNumber;
-        const quantity = req.body.quantity;
+        const paymentData = req.body;
 
-        return this.model.buyPokemon(pokemonNumber, quantity)
+        return this.model.buyPokemon(pokemonNumber, paymentData)
             .then(() => {
                 return [
                     200,
-                    `${quantity} pokemons bought. Thanks.`,
+                    `${paymentData.quantity} pokemons bought. Thanks.`,
                 ];
             });
     }

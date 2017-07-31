@@ -33,14 +33,14 @@ class PokemonValidator extends Validator {
         });
 
         this.addValidator('buy', {
-            path: {
-
+            params: {
+                pokemonNumber: Joi.number().required(),
             },
             body: {
-                cardNumber: Joi.string().required(),
-                cardExpirationDate: Joi.string().required(),
+                cardNumber: Joi.string().creditCard().required(),
+                cardExpirationDate: Joi.string().length(4).required(),
                 cardHolderName: Joi.string().required(),
-                cardCvv: Joi.string().required(),
+                cardCvv: Joi.string().length(3).required(),
                 quantity: Joi.number().integer().required(),
             },
         });

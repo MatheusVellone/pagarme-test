@@ -1,6 +1,7 @@
 'use strict';
 
 const Exception = require('../Exception/Exception');
+const log = require('../utils/log');
 
 class Controller {
     appWrapper(actionName) {
@@ -26,10 +27,9 @@ class Controller {
                     if (err instanceof Exception) {
                         res.status(err.httpCode).send(err.body);
                     } else {
-                        // TODO - nao expor stack qndo der erro
+                        log.console(err);
                         res.status(500).send({
-                            message: `An unexpected error occurred: ${err.message}`,
-                            stack: err.stack,
+                            message: 'An unexpected error occurred. Please try again later.',
                         });
                     }
                 });
