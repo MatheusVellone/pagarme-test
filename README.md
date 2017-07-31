@@ -2,6 +2,24 @@
 
 Run `npm start` to start the API.
 
+```bash
+pokemon/
+├── src/                 # Código da aplicação
+│   ├── Controller       # Controllers da aplicação
+│   ├── Exception        # Exceções customizadas
+│   ├── Model            # Models da aplicação
+│   ├── Repository       # Repositories da aplicação
+│   ├── Validator        # Validators da aplicação
+│   ├── utils            # 
+|   │   ├── date         # Funções de data
+|   │   └── log          # Funções de log
+│   └── routes.json      # Rotas da aplicação mapeadas para uma action do controller
+│
+├── test/                # Testes
+│
+└── index.js             # Ponto de entrada da aplicação que inicia o servidor
+```
+
 ## DEV env features
 - [pre-commit](https://github.com/observing/pre-commit) to avoid comits with bad code to repository
 - Code linting with [ESLint](http://eslint.org/)
