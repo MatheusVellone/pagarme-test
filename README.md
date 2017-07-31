@@ -12,7 +12,7 @@ pokemon/
 │   ├── Model            # Models da aplicação
 │   ├── Repository       # Repositories da aplicação
 │   ├── Validator        # Validators da aplicação
-│   ├── utils            # 
+│   ├── utils            #
 |   │   ├── date         # Funções de data
 |   │   └── log          # Funções de log
 │   └── routes.json      # Rotas da aplicação mapeadas para uma action do controller
@@ -32,7 +32,7 @@ pokemon/
 ## Application features
 - First seen field = _created_at_
 - Last seen field = _updated-at_
-- Extinct field = _delete_at_
+- Extinct field = _deleted_at_
 - Custom Exceptions
 - Simplified route declaration: declare routes in a json file
 - Easily prefix a group of routes
