@@ -14,9 +14,9 @@ Run `npm start` to start the API.
 - Last seen field = _updated-at_
 - Extinct field = _delete_at_
 - Custom Exceptions
-- Simplified route declaration. Declare routes in a json file
-- Prefix a group of routes
-- Map route to a controller action
+- Simplified route declaration: declare routes in a json file
+- Easily prefix a group of routes
+- Easily map route to a controller action
 - Automatic request validation using [Joi](https://github.com/hapijs/joi). Validates path, query string and body data with configured rules based on action name
 
 ## Files responsabilities
