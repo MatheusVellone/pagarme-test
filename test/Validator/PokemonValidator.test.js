@@ -1,9 +1,9 @@
 'use strict';
 
-const chai = require('chai');
+// const chai = require('chai');
 const PokemonValidator = require('../../src/Validator/PokemonValidator');
 
-const expect = chai.expect;
+// const expect = chai.expect;
 
 describe('PokemonValidator', () => {
     before(() => {

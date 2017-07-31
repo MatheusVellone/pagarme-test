@@ -1,9 +1,9 @@
 'use strict';
 
-const chai = require('chai');
+// const chai = require('chai');
 const PokemonController = require('../../src/Controller/PokemonController');
 
-const expect = chai.expect;
+// const expect = chai.expect;
 
 describe('PokemonController', () => {
     before(() => {

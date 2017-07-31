@@ -1,9 +1,9 @@
 'use strict';
 
-const chai = require('chai');
+// const chai = require('chai');
 const Model = require('../../src/Model/Model');
 
-const expect = chai.expect;
+// const expect = chai.expect;
 
 describe('Model', () => {
     before(() => {

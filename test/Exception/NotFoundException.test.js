@@ -1,9 +1,9 @@
 'use strict';
 
-const chai = require('chai');
-const NotFoundException = require('../../src/Exception/NotFoundException');
+// const chai = require('chai');
+// const NotFoundException = require('../../src/Exception/NotFoundException');
 
-const expect = chai.expect;
+// const expect = chai.expect;
 
 describe('NotFoundException', () => {
     it('Constructor', () => {

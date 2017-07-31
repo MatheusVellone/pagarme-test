@@ -1,9 +1,9 @@
 'use strict';
 
-const chai = require('chai');
-const ConflictException = require('../../src/Exception/ConflictException');
+// const chai = require('chai');
+// const ConflictException = require('../../src/Exception/ConflictException');
 
-const expect = chai.expect;
+// const expect = chai.expect;
 
 describe('ConflictException', () => {
     it('Constructor', () => {

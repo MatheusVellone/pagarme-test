@@ -1,9 +1,9 @@
 'use strict';
 
-const chai = require('chai');
+// const chai = require('chai');
 const SequelizeBaseRepository = require('../../src/Repository/SequelizeBaseRepository');
 
-const expect = chai.expect;
+// const expect = chai.expect;
 
 const fakeStructureData = {
     fields: {},

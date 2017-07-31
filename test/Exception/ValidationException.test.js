@@ -1,9 +1,9 @@
 'use strict';
 
-const chai = require('chai');
-const ValidationException = require('../../src/Exception/ValidationException');
+// const chai = require('chai');
+// const ValidationException = require('../../src/Exception/ValidationException');
 
-const expect = chai.expect;
+// const expect = chai.expect;
 
 describe('ValidationException', () => {
     it('Constructor', () => {

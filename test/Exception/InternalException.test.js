@@ -1,9 +1,9 @@
 'use strict';
 
-const chai = require('chai');
-const InternalException = require('../../src/Exception/InternalException');
+// const chai = require('chai');
+// const InternalException = require('../../src/Exception/InternalException');
 
-const expect = chai.expect;
+// const expect = chai.expect;
 
 describe('InternalException', () => {
     it('Constructor', () => {
