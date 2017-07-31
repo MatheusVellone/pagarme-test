@@ -1,3 +1,5 @@
+[![Coverage Status](https://coveralls.io/repos/github/MatheusVellone/pagarme-test/badge.svg?branch=master)](https://coveralls.io/github/MatheusVellone/pagarme-test?branch=master)
+
 # Pagar.me - Matheus Vellone
 
 Run `npm start` to start the API.
