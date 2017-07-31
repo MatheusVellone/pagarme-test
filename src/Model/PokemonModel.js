@@ -7,7 +7,7 @@ const dateISO = require('../utils/date').dateISO;
 
 class PokemonModel extends Model {
     constructor() {
-        super(PokemonRepository);
+        super(new PokemonRepository());
     }
 
     createPokemon(pokemonBody) {
@@ -79,7 +79,6 @@ class PokemonModel extends Model {
                     },
                 })
                     .then((body) => {
-                        console.log(body)
                         if (body.status === 'paid') {
                             return super.update(pokemonNumber, {
                                 stock: pokemon.stock - quantity,

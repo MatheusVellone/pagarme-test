@@ -1,5 +1,7 @@
 # Pagar.me - Matheus Vellone
 
+Run `npm start` to start the API.
+
 ## DEV env features
 - [pre-commit](https://github.com/observing/pre-commit) to avoid comits with bad code to repository.
 - Code linting with [ESLint](http://eslint.org/)

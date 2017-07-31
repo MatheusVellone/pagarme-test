@@ -1,8 +1,8 @@
 'use strict';
 
 class Model {
-    constructor(Repository) {
-        this._repository = new Repository();
+    constructor(repository) {
+        this._repository = repository;
     }
 
     create(...params) {

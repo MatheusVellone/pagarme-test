@@ -10,6 +10,7 @@ const PAGE_LIMIT = 10;
 
 const sequelize = new Sequelize('database', null, null, {
     dialect: 'sqlite',
+    logging: false,
 });
 
 class SequelizeBaseRepository extends BaseRepository {
@@ -92,8 +93,7 @@ class SequelizeBaseRepository extends BaseRepository {
                 };
 
                 return this.sequelize.update(body, options);
-            })
-            .then(x => console.log(x) || x);
+            });
     }
 
     static INCREMENT(field, value = 1) {

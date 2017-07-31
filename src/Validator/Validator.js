@@ -2,7 +2,6 @@
 
 const Joi = require('joi');
 const Promise = require('bluebird');
-const InternalException = require('../Exception/InternalException');
 const ValidationException = require('../Exception/ValidationException');
 
 class Validator {
