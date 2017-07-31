@@ -1,39 +1,40 @@
 {
-  "name": "pokemon",
-  "version": "1.0.0",
-  "description": "Example of a really bad code",
-  "main": "index.js",
-  "scripts": {
-    "start": "nodemon index",
-    "lint": "eslint --fix src",
-    "test": "istanbul cover node_modules/mocha/bin/_mocha -- test/**/*.test.js",
-    "help": "istanbul help config"
-  },
-  "pre-commit": [
-    "lint"
-  ],
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "axios": "^0.16.2",
-    "bluebird": "^3.5.0",
-    "body-parser": "^1.15.2",
-    "dotenv": "^4.0.0",
-    "express": "^4.15.3",
-    "joi": "^10.6.0",
-    "pagarme": "^3.1.1",
-    "sequelize": "^4.4.2",
-    "sqlite3": "^3.1.8"
-  },
-  "devDependencies": {
-    "chai": "^4.1.0",
-    "coveralls": "^2.13.1",
-    "eslint": "^4.3.0",
-    "eslint-config-airbnb-base": "^11.3.1",
-    "eslint-plugin-import": "^2.7.0",
-    "istanbul": "^0.4.5",
-    "mocha": "^3.4.2",
-    "nodemon": "^1.11.0",
-    "pre-commit": "^1.2.2"
-  }
+    "name": "pagarme-matheusvellone",
+    "version": "1.0.0",
+    "description": "Example of a really bad code",
+    "main": "index.js",
+    "scripts": {
+        "start": "nodemon index",
+        "lint": "eslint --fix src test",
+        "ci-test": "istanbul cover ./node_modules/mocha/bin/_mocha --report lcovonly && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage",
+        "test": "DB_DIALECT=sqlite istanbul cover ./node_modules/mocha/bin/_mocha -- test/**/*.test.js",
+        "help": "istanbul help config"
+    },
+    "pre-commit": [
+        "lint"
+    ],
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "axios": "^0.16.2",
+        "bluebird": "^3.5.0",
+        "body-parser": "^1.15.2",
+        "dotenv": "^4.0.0",
+        "express": "^4.15.3",
+        "joi": "^10.6.0",
+        "pagarme": "^3.1.1",
+        "sequelize": "^4.4.2",
+        "sqlite3": "^3.1.8"
+    },
+    "devDependencies": {
+        "chai": "^4.1.0",
+        "coveralls": "^2.13.1",
+        "eslint": "^4.3.0",
+        "eslint-config-airbnb-base": "^11.3.1",
+        "eslint-plugin-import": "^2.7.0",
+        "istanbul": "^0.4.5",
+        "mocha": "^3.4.2",
+        "nodemon": "^1.11.0",
+        "pre-commit": "^1.2.2"
+    }
 }

@@ -1,7 +1,9 @@
 language: node_js
 node_js:
   - "6.11.0"
-script: npm test
+script:
+    - npm run lint
+    - npm run ci-test
 env:
   global:
     - NODE_ENV=test
@@ -11,6 +13,6 @@ env:
     - DB_NAME=pokemon
     - DB_DIALECT=mysql
     - DB_LOGGING=false
-    - PAGARME_API_KEY=ak_test_QFjQfNTUC9MhUzMrWTMvUBqPcW0vmE
+    # PAGARME_API_KEY added to Travis via console to ensure key privacy
 before_install:
   - mysql -e 'CREATE DATABASE pokemon;'
