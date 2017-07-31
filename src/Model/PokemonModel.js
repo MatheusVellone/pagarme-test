@@ -1,9 +1,5 @@
 'use strict';
 
-// A aquisicao dos dados do pokemon da PokeApi poderia ser feito em paralelo a acao de persistir no sequelize
-// para obter melhor desempenho
-
-const Pokedex = require('pokedex-promise-v2');
 const axios = require('axios');
 const Model = require('./Model');
 const PokemonRepository = require('../Repository/PokemonRepository');
@@ -12,19 +8,11 @@ const dateISO = require('../utils/date').dateISO;
 class PokemonModel extends Model {
     constructor() {
         super(PokemonRepository);
-        this.pokedex = new Pokedex();
-    }
-
-    mergeWithExternalPokemonData(pokemon) {
-        return this.pokedex.getPokemonByName(pokemon.number)
-            .then((pokedexData) => {
-                pokemon.additionalData = pokedexData;
-                return pokemon;
-            });
     }
 
     createPokemon(pokemonBody) {
         pokemonBody.firstSeen = dateISO();
+        pokemonBody.lastSeen = dateISO();
         return super.create(pokemonBody);
     }
 
@@ -34,63 +22,54 @@ class PokemonModel extends Model {
         });
     }
 
-    extinctPokemon(pokemonBody) {
-        pokemonBody.extinct = dateISO();
-        return super.update(pokemonBody);
+    extinctPokemon(pokemonNumber) {
+        return super.update(pokemonNumber, {
+            extinct: dateISO(),
+        });
     }
 
     getAllPokemons(page = 1) {
         return super.findAll(page);
     }
 
-    getPokemonBy(attribute, value) {
+    _getPokemonBy(attribute, value) {
         return super.findOne({
             [attribute]: value,
-        })
-            .then((pokemon) => {
-                return pokemon && this.mergeWithExternalPokemonData(pokemon);
-            });
+        });
     }
 
     getPokemonByNumber(number) {
-        return this.getPokemonBy('number', number);
+        return this._getPokemonBy('number', number);
     }
 
     getPokemonByName(name) {
-        return this.getPokemonBy('name', name);
+        return this._getPokemonBy('name', name);
     }
 
-    buyPokemon(pokemonNumber, quantity) {
+    buyPokemon(pokemonNumber, quantity, paymentData) {
         return this.getPokemonByNumber(pokemonNumber)
             .then((pokemon) => {
                 if (pokemon.extinct) {
-                    return [
-                        400,
-                        `You can't buy this pokemon because it is in extinction process. These can be the last ${pokemon.stock} ${pokemon.name}s out there.`,
-                    ];
+                    return Promise.reject(`You can't buy this pokemon because it is in extinction process. These can be the last ${pokemon.stock} ${pokemon.name}s out there.`);
                 }
 
                 if (pokemon.stock < quantity) {
-                    return [
-                        400,
-                        `Not enought ${pokemon.name}s in stock. Currently have ${pokemon.stock}.`,
-                    ];
+                    return Promise.reject(`Not enought ${pokemon.name}s in stock. Currently have ${pokemon.stock}.`);
                 }
 
-                // TODO - remover 'mock'
-                return (Promise.reject({ response: {} }) || axios({
+                return axios({
                     url: 'https://api.pagar.me/1/transactions',
                     method: 'POST',
                     headers: {
                         'content-type': 'application/json',
                     },
                     data: {
-                        api_key: 'ak_test_WHgSu2XFmvoopAZMetV3LfA2RfEEQg',
+                        api_key: process.env.PAGARME_API_KEY,
                         amount: pokemon.price * quantity * 100,
-                        card_number: '4024007138010896',
-                        card_expiration_date: '1050',
-                        card_holder_name: 'Ash Ketchum',
-                        card_cvv: '123',
+                        card_number: paymentData.cardNumber, // '4024007138010896'
+                        card_expiration_date: paymentData.cardExpirationDate, // '1050'
+                        card_holder_name: paymentData.cardHolderName, // 'Ash Ketchum'
+                        card_cvv: paymentData.cardCvv, // '123',
                         metadata: {
                             product: 'pokemon',
                             name: pokemon.name,
@@ -98,21 +77,15 @@ class PokemonModel extends Model {
                             quantity,
                         },
                     },
-                }))
-                    .catch((err) => {
-                        console.log(err.response.data);
-                        // TODO - retirar isso
-                        return {
-                            status: 'paid',
-                        };
-                    })
+                })
                     .then((body) => {
+                        console.log(body)
                         if (body.status === 'paid') {
                             return super.update(pokemonNumber, {
                                 stock: pokemon.stock - quantity,
                             });
                         }
-                        return Promise.reject(`The payment status was ${body.status}`);
+                        return Promise.reject(`The payment failed with status '${body.status}'`);
                     });
             });
     }

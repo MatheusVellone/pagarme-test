@@ -1,7 +1,10 @@
 'use strict';
 
 const Sequelize = require('sequelize');
+const Promise = require('bluebird');
 const BaseRepository = require('./BaseRepository');
+const NotFoundException = require('../Exception/NotFoundException');
+const ConflictException = require('../Exception/ConflictException');
 
 const PAGE_LIMIT = 10;
 
@@ -12,8 +15,8 @@ const sequelize = new Sequelize('database', null, null, {
 class SequelizeBaseRepository extends BaseRepository {
     constructor(structureData) {
         super();
-        const name = this.constructor.name.replace('Repository', '');
-        this.sequelize = sequelize.define(name, structureData.fields, structureData.config || {});
+        this._alias = this.constructor.name.replace('Repository', '');
+        this.sequelize = sequelize.define(this._alias, structureData.fields, structureData.config || {});
 
         this.primaryKey = Object.keys(structureData.fields)
             .filter((field) => {
@@ -30,10 +33,16 @@ class SequelizeBaseRepository extends BaseRepository {
         return this.sequelize.findOne({
             raw: true,
             where: condition,
-        });
+        })
+            .then((record) => {
+                if (!record) {
+                    throw new NotFoundException(this._alias);
+                }
+                return record;
+            });
     }
 
-    findAll(page, filter, pageLimit = 1) {
+    findAll(page, filter, pageLimit = PAGE_LIMIT) {
         const findAllOptions = {
             where: filter,
             limit: pageLimit,
@@ -59,6 +68,12 @@ class SequelizeBaseRepository extends BaseRepository {
         return this.ready
             .then(() => {
                 return this.sequelize.create(body);
+            })
+            .catch((err) => {
+                if (err.name === 'SequelizeUniqueConstraintError') {
+                    throw new ConflictException(this._alias);
+                }
+                return Promise.reject(err);
             });
     }
 
@@ -74,11 +89,11 @@ class SequelizeBaseRepository extends BaseRepository {
                 const body = params[0];
                 const options = {
                     where: keyCondition,
-                    returning: true,
                 };
 
                 return this.sequelize.update(body, options);
-            });
+            })
+            .then(x => console.log(x) || x);
     }
 
     static INCREMENT(field, value = 1) {

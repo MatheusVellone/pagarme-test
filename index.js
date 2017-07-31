@@ -5,6 +5,8 @@ const bodyParser = require('body-parser');
 const log = require('./src/utils/log');
 const appRoutes = require('./src/routes.json');
 
+require('dotenv').config();
+
 const controllers = {};
 const app = express();
 const PORT = process.env.PORT || 3000;

@@ -11,7 +11,7 @@ class Validator {
     }
 
     addValidator(alias, validatorRules) {
-        this._validators[alias] = validatorRules;
+        this._validators[alias] = Joi.object(validatorRules);
     }
 
     validate(alias, targetToValidate) {

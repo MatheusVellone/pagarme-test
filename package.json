@@ -2,11 +2,10 @@
     "name": "pokemon",
     "version": "1.0.0",
     "description": "Example of a really bad code",
-    "main": "idnex.js",
+    "main": "index.js",
     "scripts": {
         "start": "nodemon index",
-        "lint": "eslint --fix src",
-        "test": "echo \"Error: no test specified\" && exit 1"
+        "lint": "eslint --fix src"
     },
     "pre-commit": [
         "lint"
@@ -17,10 +16,11 @@
         "axios": "^0.16.2",
         "bluebird": "^3.5.0",
         "body-parser": "^1.15.2",
+        "dotenv": "^4.0.0",
         "express": "^4.15.3",
         "joi": "^10.6.0",
-        "pokedex-promise-v2": "^3.0.3",
-        "sequelize": "^4.4.2"
+        "sequelize": "^4.4.2",
+        "sqlite3": "^3.1.8"
     },
     "devDependencies": {
         "eslint": "^4.3.0",

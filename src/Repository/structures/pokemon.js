@@ -28,7 +28,7 @@ module.exports.fields = {
         type: Sequelize.DATE,
     },
     extinct: {
-        type: Sequelize.BOOLEAN,
+        type: Sequelize.DATE,
     },
 };
 

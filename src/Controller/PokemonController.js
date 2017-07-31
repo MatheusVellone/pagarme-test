@@ -29,7 +29,7 @@ class PokemonController extends Controller {
             .then(() => {
                 return [
                     201,
-                    `Pokemon ${body.name} ${body.number} created`,
+                    `Pokemon ${body.name} #${body.number} created`,
                 ];
             });
     }
