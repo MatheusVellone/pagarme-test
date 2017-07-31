@@ -8,10 +8,10 @@ env:
   global:
     - NODE_ENV=test
     - PORT=3000
-    - DB_USER=travis
+    - DB_USER=
     - DB_PASS=
     - DB_NAME=pokemon
-    - DB_DIALECT=mysql
+    - DB_DIALECT=sqlite
     - DB_LOGGING=false
     # PAGARME_API_KEY added to Travis via console to ensure key privacy
 before_install:
