@@ -8,9 +8,9 @@ const ConflictException = require('../Exception/ConflictException');
 
 const PAGE_LIMIT = 10;
 
-const sequelize = new Sequelize('database', null, null, {
-    dialect: 'sqlite',
-    logging: false,
+const sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USER, process.env.DB_PASS, {
+    dialect: process.env.DB_DIALECT,
+    logging: process.env.DB_LOGGING,
 });
 
 class SequelizeBaseRepository extends BaseRepository {
