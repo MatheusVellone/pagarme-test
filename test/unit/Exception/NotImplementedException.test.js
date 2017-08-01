@@ -9,8 +9,8 @@ const expect = chai.expect;
 
 describe('NotImplementedException', () => {
     it('Constructor', () => {
-        const name = 'random name';
-        const exception = new NotImplementedException(__dirname, __filename, name);
+        const name = 'randomName';
+        const exception = new NotImplementedException(__filename, name);
 
         expect(exception).to.be.an.instanceof(Error);
         expect(exception).to.be.an.instanceof(Exception);

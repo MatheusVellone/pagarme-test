@@ -9,23 +9,23 @@ const NotImplementedException = require('../Exception/NotImplementedException');
  */
 class BaseRepository {
     create() {
-        throw new NotImplementedException(__dirname, __filename, 'create');
+        throw new NotImplementedException(__filename, 'create');
     }
 
     findOne() {
-        throw new NotImplementedException(__dirname, __filename, 'findOne');
+        throw new NotImplementedException(__filename, 'findOne');
     }
 
     findAll() {
-        throw new NotImplementedException(__dirname, __filename, 'findAll');
+        throw new NotImplementedException(__filename, 'findAll');
     }
 
     update() {
-        throw new NotImplementedException(__dirname, __filename, 'update');
+        throw new NotImplementedException(__filename, 'update');
     }
 
     remove() {
-        throw new NotImplementedException(__dirname, __filename, 'remove');
+        throw new NotImplementedException(__filename, 'remove');
     }
 }
 

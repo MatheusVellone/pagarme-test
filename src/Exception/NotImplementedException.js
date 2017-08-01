@@ -3,8 +3,8 @@
 const InternalException = require('./InternalException');
 
 class NotImplementedException extends InternalException {
-    constructor(dirname, filename, action) {
-        super(`${dirname}/${filename}.${action} isn't implemented`);
+    constructor(filename, action) {
+        super(`${filename.replace(/(.*)\..*/, '$1')}.${action} isn't implemented`);
     }
 }
 

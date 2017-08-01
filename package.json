@@ -6,9 +6,9 @@
     "scripts": {
         "start": "nodemon index",
         "lint": "eslint --fix src test",
-        "ci-test": "istanbul cover ./node_modules/mocha/bin/_mocha --report lcovonly -- test/**/*.test.js",
+        "ci-test": "istanbul cover ./node_modules/mocha/bin/_mocha --report lcovonly -- 'test/**/*.test.js'",
         "send-coverage-data": "cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage",
-        "test": "cross-env DB_DIALECT=sqlite istanbul cover ./node_modules/mocha/bin/_mocha -- test/**/*.test.js",
+        "test": "cross-env DB_DIALECT=sqlite istanbul cover ./node_modules/mocha/bin/_mocha -- 'test/**/*.test.js'",
         "help": "istanbul help config"
     },
     "pre-commit": [
