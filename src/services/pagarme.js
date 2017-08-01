@@ -6,7 +6,6 @@ const pagarme = require('pagarme');
 let instance;
 
 class Pagarme {
-
     /**
      * @returns {Pagarme}
      */

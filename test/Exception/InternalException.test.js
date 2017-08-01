@@ -16,7 +16,7 @@ describe('InternalException', () => {
 
         expect(exception.httpCode).to.be.eql(500);
         expect(exception.body).to.be.eql({
-            message: 'An internao error ocurred',
+            message: 'An internal error ocurred',
         });
     });
 });
