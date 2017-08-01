@@ -6,7 +6,7 @@
 Run `npm start` to start the API.
 
 ```bash
-pokemon/
+pagarme-test/
 ├── src/                 # Application source code
 │   ├── Controller       # Application Controllers
 │   ├── Exception        # Custom application Esceptions
@@ -30,6 +30,7 @@ pokemon/
 - [Nodemon](https://nodemon.io/) to restart server on code change
 - .env file
 - Tests with [Mocha](https://mochajs.org/), assertion with [Chai](http://chaijs.com/api/bdd/) and coverage by [Istanbul](https://gotwarlost.github.io/istanbul/)
+- [Nyan cat Test report](https://mochajs.org/#nyan)
 
 ## Application features
 - First seen field = _created_at_
