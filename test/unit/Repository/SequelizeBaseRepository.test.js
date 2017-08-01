@@ -1,7 +1,7 @@
 'use strict';
 
 // const chai = require('chai');
-const SequelizeBaseRepository = require('../../src/Repository/SequelizeBaseRepository');
+const SequelizeBaseRepository = require('../../../src/Repository/SequelizeBaseRepository');
 
 // const expect = chai.expect;
 

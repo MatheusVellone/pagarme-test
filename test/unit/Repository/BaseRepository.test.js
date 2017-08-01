@@ -1,7 +1,7 @@
 'use strict';
 
 // const chai = require('chai');
-const BaseRepository = require('../../src/Repository/BaseRepository');
+const BaseRepository = require('../../../src/Repository/BaseRepository');
 
 // const expect = chai.expect;
 

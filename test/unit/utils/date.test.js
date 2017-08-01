@@ -1,7 +1,7 @@
 'use strict';
 
 const chai = require('chai');
-const dateUtils = require('../../src/utils/date');
+const dateUtils = require('../../../src/utils/date');
 
 const expect = chai.expect;
 

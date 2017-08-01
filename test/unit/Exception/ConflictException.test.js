@@ -1,8 +1,8 @@
 'use strict';
 
 const chai = require('chai');
-const Exception = require('../../src/Exception/Exception');
-const ConflictException = require('../../src/Exception/ConflictException');
+const Exception = require('../../../src/Exception/Exception');
+const ConflictException = require('../../../src/Exception/ConflictException');
 
 const expect = chai.expect;
 

@@ -1,9 +1,9 @@
 'use strict';
 
 const chai = require('chai');
-const PokemonController = require('../../src/Controller/PokemonController');
-const PokemonValidator = require('../../src/Validator/PokemonValidator');
-const PokemonModel = require('../../src/Model/PokemonModel');
+const PokemonController = require('../../../src/Controller/PokemonController');
+const PokemonValidator = require('../../../src/Validator/PokemonValidator');
+const PokemonModel = require('../../../src/Model/PokemonModel');
 
 const expect = chai.expect;
 

@@ -1,8 +1,8 @@
 'use strict';
 
 const chai = require('chai');
-const Exception = require('../../src/Exception/Exception');
-const InternalException = require('../../src/Exception/InternalException');
+const Exception = require('../../../src/Exception/Exception');
+const InternalException = require('../../../src/Exception/InternalException');
 
 const expect = chai.expect;
 

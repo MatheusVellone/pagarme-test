@@ -1,7 +1,7 @@
 'use strict';
 
 // const chai = require('chai');
-const Model = require('../../src/Model/Model');
+const Model = require('../../../src/Model/Model');
 
 // const expect = chai.expect;
 

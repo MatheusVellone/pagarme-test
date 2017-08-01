@@ -1,7 +1,7 @@
 'use strict';
 
 const chai = require('chai');
-const Validator = require('../../src/Validator/Validator');
+const Validator = require('../../../src/Validator/Validator');
 
 const expect = chai.expect;
 

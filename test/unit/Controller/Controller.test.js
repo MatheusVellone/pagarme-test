@@ -1,7 +1,7 @@
 'use strict';
 
 const chai = require('chai');
-const Controller = require('../../src/Controller/Controller');
+const Controller = require('../../../src/Controller/Controller');
 
 const expect = chai.expect;
 

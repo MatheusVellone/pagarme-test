@@ -1,7 +1,7 @@
 'use strict';
 
 // const chai = require('chai');
-const PokemonModel = require('../../src/Model/PokemonModel');
+const PokemonModel = require('../../../src/Model/PokemonModel');
 
 // const expect = chai.expect;
 
