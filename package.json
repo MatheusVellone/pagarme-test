@@ -8,7 +8,7 @@
         "lint": "eslint --fix src test",
         "ci-test": "istanbul cover ./node_modules/mocha/bin/_mocha --report lcovonly -- 'test/**/*.test.js'",
         "send-coverage-data": "cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage",
-        "test": "cross-env FORCE_COLOR=true DB_DIALECT=sqlite istanbul cover ./node_modules/mocha/bin/_mocha -- test/**/*.test.js",
+        "test": "cross-env FORCE_COLOR=true DB_DIALECT=sqlite istanbul cover ./node_modules/mocha/bin/_mocha -- -R nyan test/**/*.test.js",
         "deploy-prod": "echo 'This could be a deploy command to run a .sh script that deploy the codes to production when CI finishes'"
     },
     "pre-commit": [
