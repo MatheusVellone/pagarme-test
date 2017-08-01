@@ -1,6 +1,7 @@
 'use strict';
 
 const Exception = require('../Exception/Exception');
+const InternalException = require('../Exception/InternalException');
 const log = require('../utils/log');
 
 class Controller {
@@ -24,14 +25,11 @@ class Controller {
                     res.status(httpCode).send(body);
                 })
                 .catch((err) => {
-                    if (err instanceof Exception) {
-                        res.status(err.httpCode).send(err.body);
-                    } else {
+                    if (!(err instanceof Exception)) {
                         log.console(err);
-                        res.status(500).send({
-                            message: 'An unexpected error occurred. Please try again later.',
-                        });
+                        err = new InternalException();
                     }
+                    res.status(err.httpCode).send(err.body);
                 });
         };
     }

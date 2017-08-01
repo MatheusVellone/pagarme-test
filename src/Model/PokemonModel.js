@@ -3,7 +3,8 @@
 const Model = require('./Model');
 const PokemonRepository = require('../Repository/PokemonRepository');
 const dateISO = require('../utils/date').dateISO;
-const postRequest = require('../utils/request').post;
+const Pagarme = require('../services/pagarme');
+const InvalidOperationException = require('../Exception/InvalidOperationException');
 
 class PokemonModel extends Model {
     constructor() {
@@ -50,20 +51,19 @@ class PokemonModel extends Model {
         return this.getPokemonByNumber(pokemonNumber)
             .then((pokemon) => {
                 if (pokemon.extinct) {
-                    return Promise.reject(`You can't buy this pokemon because it is in extinction process. These can be the last ${pokemon.stock} ${pokemon.name}s out there.`);
+                    throw new InvalidOperationException(`You can't buy this pokemon because it is in extinction process. These can be the last ${pokemon.stock} ${pokemon.name}s out there.`);
                 }
 
                 if (pokemon.stock < paymentBody.quantity) {
-                    return Promise.reject(`Not enought ${pokemon.name}s in stock. Currently have ${pokemon.stock}.`);
+                    throw new InvalidOperationException(`Not enought ${pokemon.name}s in stock. Currently have ${pokemon.stock}.`);
                 }
 
-                const data = {
-                    api_key: process.env.PAGARME_API_KEY,
-                    amount: pokemon.price * paymentBody.quantity * 100,
-                    card_number: paymentBody.cardNumber, // '4024007138010896'
-                    card_expiration_date: paymentBody.cardExpirationDate, // '1050'
-                    card_holder_name: paymentBody.cardHolderName, // 'Ash Ketchum'
-                    card_cvv: paymentBody.cardCvv, // '123',
+                const transactionData = {
+                    value: pokemon.price * paymentBody.quantity,
+                    cardNumber: paymentBody.cardNumber, // '4024007138010896'
+                    cardExpirationDate: paymentBody.cardExpirationDate, // '1050'
+                    cardHolderName: paymentBody.cardHolderName, // 'Ash Ketchum'
+                    cardCvv: paymentBody.cardCvv, // '123',
                     metadata: {
                         product: 'pokemon',
                         name: pokemon.name,
@@ -72,21 +72,15 @@ class PokemonModel extends Model {
                     },
                 };
 
-                const headers = {
-                    'content-type': 'application/json',
-                };
-
-                // TODO - use pagarme SDK
-                // https://pagarme.github.io/pagarme-js/
-                return postRequest('https://api.pagar.me/1/transactions', data, undefined, headers)
+                const pagarmeClient = Pagarme.getInstance();
+                return pagarmeClient.transaction(transactionData)
                     .then((body) => {
-                        // console.log(body);
                         if (body.status === 'paid') {
                             return super.update(pokemonNumber, {
                                 stock: pokemon.stock - paymentBody.quantity,
                             });
                         }
-                        return Promise.reject(`The payment failed with status '${body.status}'`);
+                        throw new InvalidOperationException(`The payment failed with status '${body.status}'`);
                     });
             });
     }

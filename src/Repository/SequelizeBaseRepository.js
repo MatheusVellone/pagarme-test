@@ -10,7 +10,7 @@ const PAGE_LIMIT = 10;
 
 const sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USER, process.env.DB_PASS, {
     dialect: process.env.DB_DIALECT,
-    logging: process.env.DB_LOGGING,
+    logging: process.env.DB_LOGGING === 'true',
 });
 
 class SequelizeBaseRepository extends BaseRepository {
