@@ -1,28 +1,28 @@
 'use strict';
 
-// const chai = require('chai');
-// const ValidationException = require('../../src/Exception/ValidationException');
+const chai = require('chai');
+const Exception = require('../../src/Exception/Exception');
+const ValidationException = require('../../src/Exception/ValidationException');
 
-// const expect = chai.expect;
+const expect = chai.expect;
 
 describe('ValidationException', () => {
     it('Constructor', () => {
+        const errors = {
+            some: {
+                error: 'structure',
+            },
+        };
+        const exception = new ValidationException(errors);
 
+        expect(exception).to.be.an.instanceof(Error);
+        expect(exception).to.be.an.instanceof(Exception);
+        expect(exception).to.be.an.instanceof(ValidationException);
+
+        expect(exception.httpCode).to.be.eql(422);
+        expect(exception.body).to.be.eql({
+            message: '1 validation errors',
+            validationErrors: errors,
+        });
     });
 });
-
-// const Exception = require('./Exception.test');
-//
-// class ValidationException extends Exception {
-//     constructor(errorsObject) {
-//         const errorsLength = Object.keys(errorsObject).length;
-//         const body = {
-//             message: `${errorsLength} validation errors`,
-//             validationErrors: errorsObject,
-//         };
-//
-//         super(422, body);
-//     }
-// }
-//
-// module.exports = ValidationException;
