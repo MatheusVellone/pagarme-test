@@ -24,6 +24,12 @@ class PokemonValidator extends Validator {
             },
         });
 
+        this.addValidator('extinct', {
+            params: {
+                number: this.getPredefined('PokemonNumber', true),
+            },
+        });
+
         this.addValidator('donate', {
             params: {
                 number: Joi.number().required(),

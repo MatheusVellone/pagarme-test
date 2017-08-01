@@ -5,6 +5,6 @@
         "POST /:number": "PokemonController.buy",
         "GET /:number": "PokemonController.show",
         "PUT /:number": "PokemonController.donate",
-        "DELETE /:number": "PokemonController.remove"
+        "DELETE /:number": "PokemonController.extinct"
     }
 }

@@ -8,7 +8,7 @@
     "lint": "eslint --fix src test",
     "ci-test": "istanbul cover ./node_modules/mocha/bin/_mocha --report lcovonly -- 'test/**/*.test.js'",
     "send-coverage-data": "cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage",
-    "test": "npm run lint && cross-env DB_DIALECT=sqlite istanbul cover ./node_modules/mocha/bin/_mocha -- 'test/**/*.test.js'",
+    "test": "cross-env DB_DIALECT=sqlite istanbul cover ./node_modules/mocha/bin/_mocha -- test/**/*.test.js",
     "help": "istanbul help config"
   },
   "pre-commit": [
@@ -25,6 +25,7 @@
     "mysql2": "^1.3.6",
     "pagarme": "^3.1.1",
     "pg": "^7.0.2",
+    "pluralize": "^6.0.0",
     "sequelize": "^4.4.2",
     "sqlite3": "^3.1.8"
   },

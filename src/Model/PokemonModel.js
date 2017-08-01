@@ -1,5 +1,6 @@
 'use strict';
 
+const pluralize = require('pluralize');
 const Model = require('./Model');
 const PokemonRepository = require('../Repository/PokemonRepository');
 const dateISO = require('../utils/date').dateISO;
@@ -55,15 +56,15 @@ class PokemonModel extends Model {
                 }
 
                 if (pokemon.stock < paymentBody.quantity) {
-                    throw new InvalidOperationException(`Not enought ${pokemon.name}s in stock. Currently have ${pokemon.stock}.`);
+                    throw new InvalidOperationException(`Not enought ${pluralize(pokemon.name, paymentBody.quantity)} in stock. Currently have ${pokemon.stock}.`);
                 }
 
                 const transactionData = {
                     value: pokemon.price * paymentBody.quantity,
-                    cardNumber: paymentBody.cardNumber, // '4024007138010896'
-                    cardExpirationDate: paymentBody.cardExpirationDate, // '1050'
-                    cardHolderName: paymentBody.cardHolderName, // 'Ash Ketchum'
-                    cardCvv: paymentBody.cardCvv, // '123',
+                    cardNumber: paymentBody.cardNumber,
+                    cardExpirationDate: paymentBody.cardExpirationDate,
+                    cardHolderName: paymentBody.cardHolderName,
+                    cardCvv: paymentBody.cardCvv,
                     metadata: {
                         product: 'pokemon',
                         name: pokemon.name,

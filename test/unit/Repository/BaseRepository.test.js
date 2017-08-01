@@ -1,9 +1,10 @@
 'use strict';
 
-// const chai = require('chai');
+const chai = require('chai');
 const BaseRepository = require('../../../src/Repository/BaseRepository');
+const NotImplementedException = require('../../../src/Exception/NotImplementedException');
 
-// const expect = chai.expect;
+const expect = chai.expect;
 
 describe('BaseRepository', () => {
     before(() => {
@@ -11,35 +12,20 @@ describe('BaseRepository', () => {
     });
 
     it('Constructor', () => {
+        expect(this.repository).to.be.an.instanceof(BaseRepository);
+    });
 
+    it('Expect abstract methods', () => {
+        const methods = [
+            'create',
+            'findOne',
+            'findAll',
+            'update',
+            'remove',
+        ];
+
+        methods.forEach((method) => {
+            expect(this.repository[method]).to.throw(NotImplementedException);
+        });
     });
 });
-
-// const NotImplementedException = require('../Exception/NotImplementedException.test');
-//
-// /**
-//  * Acts like an interface
-//  */
-// class BaseRepository {
-//     create() {
-//         throw new NotImplementedException(__dirname, __filename, 'create');
-//     }
-//
-//     findOne() {
-//         throw new NotImplementedException(__dirname, __filename, 'findOne');
-//     }
-//
-//     findAll() {
-//         throw new NotImplementedException(__dirname, __filename, 'findAll');
-//     }
-//
-//     update() {
-//         throw new NotImplementedException(__dirname, __filename, 'update');
-//     }
-//
-//     remove() {
-//         throw new NotImplementedException(__dirname, __filename, 'remove');
-//     }
-// }
-//
-// module.exports = BaseRepository;

@@ -3,6 +3,7 @@
 const Controller = require('./Controller');
 const PokemonValidator = require('../Validator/PokemonValidator');
 const PokemonModel = require('../Model/PokemonModel');
+const pluralize = require('pluralize');
 
 class PokemonController extends Controller {
     constructor() {
@@ -42,7 +43,7 @@ class PokemonController extends Controller {
             .then(() => {
                 return [
                     200,
-                    `${quantity} pokemon${quantity > 1 ? 's' : ''} donated. Thanks for your donation.`,
+                    `${quantity} ${pluralize('pokemon', quantity)} donated. Thanks for your donation.`,
                 ];
             });
     }
@@ -55,7 +56,7 @@ class PokemonController extends Controller {
             .then(() => {
                 return [
                     200,
-                    `${paymentData.quantity} pokemons bought. Thanks.`,
+                    `${paymentData.quantity} ${pluralize('pokemon', paymentData.quantity)} bought. Thanks.`,
                 ];
             });
     }
@@ -76,7 +77,7 @@ class PokemonController extends Controller {
             });
     }
 
-    remove(req) {
+    extinct(req) {
         const pokemonNumber = req.params.number;
 
         return this.model.extinctPokemon(pokemonNumber)

@@ -24,5 +24,11 @@
         "name": "Chicorita",
         "stock": 100,
         "price": 14.99
+    },
+    "cardData": {
+        "cardNumber": "4024007138010896",
+        "cardExpirationDate" : "1050",
+        "cardCvv" : "123",
+        "cardHolderName": "Matheus Vellone"
     }
 }
