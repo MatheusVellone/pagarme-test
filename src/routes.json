@@ -2,9 +2,9 @@
     "pokemon": {
         "GET /": "PokemonController.list",
         "POST /": "PokemonController.create",
-        "POST /:pokemonNumber": "PokemonController.buy",
-        "GET /:pokemonNumber": "PokemonController.show",
-        "PUT /:pokemonNumber": "PokemonController.donate",
-        "DELETE /:pokemonNumber": "PokemonController.remove"
+        "POST /:number": "PokemonController.buy",
+        "GET /:number": "PokemonController.show",
+        "PUT /:number": "PokemonController.donate",
+        "DELETE /:number": "PokemonController.remove"
     }
 }

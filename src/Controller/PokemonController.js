@@ -12,11 +12,11 @@ class PokemonController extends Controller {
     }
 
     show(req) {
-        const pokemonNumber = req.params.pokemonNumber;
+        const pokemonNumber = req.params.number;
         return this.model.getPokemonByNumber(pokemonNumber)
             .then((pokemon) => {
                 return [200, {
-                    message: `Pokemon #${pokemonNumber}`,
+                    message: `${pokemon.name} (#${pokemonNumber}) data`,
                     result: pokemon,
                 }];
             });
@@ -29,13 +29,13 @@ class PokemonController extends Controller {
             .then(() => {
                 return [
                     201,
-                    `Pokemon ${body.name} #${body.number} created`,
+                    `Pokemon ${body.name} (#${body.number}) created`,
                 ];
             });
     }
 
     donate(req) {
-        const pokemonNumber = req.params.pokemonNumber;
+        const pokemonNumber = req.params.number;
         const quantity = req.body.quantity;
 
         return this.model.donatePokemon(pokemonNumber, quantity)
@@ -48,7 +48,7 @@ class PokemonController extends Controller {
     }
 
     buy(req) {
-        const pokemonNumber = req.params.pokemonNumber;
+        const pokemonNumber = req.params.number;
         const paymentData = req.body;
 
         return this.model.buyPokemon(pokemonNumber, paymentData)
@@ -77,7 +77,7 @@ class PokemonController extends Controller {
     }
 
     remove(req) {
-        const pokemonNumber = req.params.pokemonNumber;
+        const pokemonNumber = req.params.number;
 
         return this.model.extinctPokemon(pokemonNumber)
             .then(() => {

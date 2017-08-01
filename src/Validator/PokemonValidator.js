@@ -7,10 +7,11 @@ class PokemonValidator extends Validator {
     constructor() {
         super();
 
+        this.addPredefined('PokemonNumber', Joi.number().integer().min(1).max(151));
+
         this.addValidator('create', {
             body: Joi.object({
-                number: Joi.number().integer().min(1).max(151)
-                    .required(),
+                number: this.getPredefined('PokemonNumber', true),
                 name: Joi.string().required(),
                 price: Joi.number().required(),
                 stock: Joi.number(),
@@ -19,13 +20,13 @@ class PokemonValidator extends Validator {
 
         this.addValidator('show', {
             params: {
-                pokemonNumber: Joi.number().required(),
+                number: this.getPredefined('PokemonNumber', true),
             },
         });
 
         this.addValidator('donate', {
             params: {
-                pokemonNumber: Joi.number().required(),
+                number: Joi.number().required(),
             },
             body: Joi.object({
                 quantity: Joi.number().required(),
@@ -34,7 +35,7 @@ class PokemonValidator extends Validator {
 
         this.addValidator('buy', {
             params: {
-                pokemonNumber: Joi.number().required(),
+                number: Joi.number().required(),
             },
             body: {
                 cardNumber: Joi.string().creditCard().required(),
@@ -43,10 +44,6 @@ class PokemonValidator extends Validator {
                 cardCvv: Joi.string().length(3).required(),
                 quantity: Joi.number().integer().required(),
             },
-        });
-
-        this.addValidator('get', {
-
         });
 
         this.addValidator('list', {

@@ -7,6 +7,20 @@ const ValidationException = require('../Exception/ValidationException');
 class Validator {
     constructor() {
         this._validators = {};
+        this._predefined = {};
+    }
+
+    addPredefined(alias, rule) {
+        this._predefined[alias] = rule;
+    }
+
+    getPredefined(alias, required = false) {
+        const rule = this._predefined[alias];
+        if (!rule) {
+            return Joi.any();
+        }
+
+        return required ? rule.required() : rule;
     }
 
     addValidator(alias, validatorRules) {

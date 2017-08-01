@@ -51,3 +51,5 @@ app.all('*', (req, res) => {
 app.listen(PORT, () => {
     log.console(`Listening on http://localhost:${PORT}`);
 });
+
+module.exports = app;

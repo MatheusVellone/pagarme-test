@@ -1,0 +1,28 @@
+{
+    "basic": [
+        {
+            "number": 1,
+            "name": "Bulbasaur",
+            "stock": 100,
+            "price": 12.99
+        },
+        {
+            "number": 4,
+            "name": "Charmander",
+            "stock": 100,
+            "price": 12.99
+        },
+        {
+            "number": 7,
+            "name": "Squirtle",
+            "stock": 100,
+            "price": 12.99
+        }
+    ],
+    "error": {
+        "number": 152,
+        "name": "Chicorita",
+        "stock": 100,
+        "price": 14.99
+    }
+}
