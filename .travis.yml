@@ -6,6 +6,11 @@ script:
     - npm run ci-test
 after_script:
     - npm run send-coverage-data
+deploy:
+    provider: script
+    script: npm run deploy-prod
+    on:
+        branch: master
 env:
   global:
     - NODE_ENV=test
