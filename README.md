@@ -53,3 +53,12 @@ pagarme-test/
 - `npm test`: test the application
 - `npm run lint`: lint the code. Before every commit, this command is executed
 - `npm run deploy`
+
+## Routes
+
+- `GET /pokemon` List all pokemons with pagination
+- `GET /pokemon/:number` Get information about a single pokemon
+- `POST /pokemon` Create a pokemon
+- `POST /pokemon/:number` Buy a pok
+- `PUT /pokemon/:number` Donate a pokemon
+- `DELETE /pokemon/:number` Put a pokemon in extinction process
