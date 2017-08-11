@@ -1,5 +1,6 @@
 'use strict';
 
+const Promise = require('bluebird');
 const Exception = require('../Exception/Exception');
 const InternalException = require('../Exception/InternalException');
 const log = require('../utils/log');
