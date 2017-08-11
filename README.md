@@ -25,7 +25,7 @@ pagarme-test/
 ```
 
 ## DEV env features
-- [pre-commit](https://github.com/observing/pre-commit) to avoid comits with bad code to repository
+- [pre-commit](https://github.com/observing/pre-commit) to avoid commits with bad code to repository
 - Code linting with [ESLint](http://eslint.org/)
 - [Nodemon](https://nodemon.io/) to restart server on code change
 - .env file
