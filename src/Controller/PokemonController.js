@@ -8,6 +8,8 @@ const pluralize = require('pluralize');
 class PokemonController extends Controller {
     constructor() {
         super();
+        // Declara o validator e o model do controller.
+        // Poderia fazer isso com base em getter/setter, mas por simplicidade ficou assim
         this.validator = new PokemonValidator();
         this.model = new PokemonModel();
     }

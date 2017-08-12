@@ -21,6 +21,7 @@ class PokemonModel extends Model {
     donatePokemon(pokemonNumber, stock) {
         return super.update(pokemonNumber, {
             stock: PokemonRepository.INCREMENT('stock', stock),
+            lastSeen: dateISO(),
         });
     }
 

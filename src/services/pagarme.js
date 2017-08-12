@@ -7,6 +7,7 @@ let instance;
 
 class Pagarme {
     /**
+     * Singleton para melhor performance, pois nao e necessario ter uma instancia nova toda vez
      * @returns {Pagarme}
      */
     static getInstance() {
@@ -18,6 +19,7 @@ class Pagarme {
 
     constructor() {
         this._connect = pagarme.client.connect({
+            // Carrega a API_KEY do pagarme via variavel de ambiente
             api_key: process.env.PAGARME_API_KEY,
         });
     }
@@ -26,6 +28,7 @@ class Pagarme {
         return this._connect
             .then((client) => {
                 return client.transactions.create({
+                    // Padronizar o envio do valor no formato comum: 19.99
                     amount: Math.round(data.value * 100),
                     card_holder_name: data.cardHolderName,
                     card_expiration_date: data.cardExpirationDate,

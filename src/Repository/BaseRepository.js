@@ -8,6 +8,11 @@ const NotImplementedException = require('../Exception/NotImplementedException');
  * Acts like an interface
  */
 class BaseRepository {
+    constructor() {
+        // Carrega o alias com base no nome da classe
+        this._alias = this.constructor.name.replace('Repository', '');
+    }
+
     create() {
         throw new NotImplementedException(__filename, 'create');
     }

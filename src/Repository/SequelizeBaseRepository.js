@@ -6,8 +6,11 @@ const BaseRepository = require('./BaseRepository');
 const NotFoundException = require('../Exception/NotFoundException');
 const ConflictException = require('../Exception/ConflictException');
 
+// Limite de paginacao
 const PAGE_LIMIT = 10;
 
+// Configuracoes de conexao com o banco, dialeto a ser usado, logs, tudo com base
+// nas variaveis de ambiente
 const sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USER, process.env.DB_PASS, {
     dialect: process.env.DB_DIALECT,
     logging: process.env.DB_LOGGING === 'true',
@@ -16,9 +19,9 @@ const sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USER, proces
 class SequelizeBaseRepository extends BaseRepository {
     constructor(structureData) {
         super();
-        this._alias = this.constructor.name.replace('Repository', '');
         this.sequelize = sequelize.define(this._alias, structureData.fields, structureData.config || {});
 
+        // Configura as chaves primarias com base na estrutura. Defaults to ['id'].
         this.primaryKey = Object.keys(structureData.fields)
             .filter((field) => {
                 const fieldData = structureData.fields[field];
@@ -53,6 +56,7 @@ class SequelizeBaseRepository extends BaseRepository {
 
         return this.sequelize.findAndCountAll(findAllOptions)
             .then((result) => {
+                // Dados de paginacao
                 const pagination = {
                     currentPage: page,
                     pages: Math.ceil((result.count / pageLimit)),
@@ -78,6 +82,7 @@ class SequelizeBaseRepository extends BaseRepository {
             });
     }
 
+    // Node nao suporta algo como update(...keys, updateBody) para pegar
     update(...params) {
         return this.ready
             .then(() => {
