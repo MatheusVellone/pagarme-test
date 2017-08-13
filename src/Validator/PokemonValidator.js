@@ -7,8 +7,10 @@ class PokemonValidator extends Validator {
     constructor() {
         super();
 
+        // Adiciona uma nova regra predefinida chamada PokemonNumber
         this.addPredefined('PokemonNumber', Joi.number().integer().min(1).max(151));
 
+        // Cria os validadores com o alias sendo o nome da action da rota
         this.addValidator('create', {
             body: Joi.object({
                 number: this.getPredefined('PokemonNumber', true),

@@ -7,6 +7,7 @@ class Exception extends Error {
         this.httpCode = httpCode;
 
         if (typeof body === 'string') {
+            // Igual ao Controller, para simplificar body que possuem apenas uma mensagem
             body = {
                 message: body,
             };
