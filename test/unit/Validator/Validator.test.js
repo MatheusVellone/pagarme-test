@@ -21,14 +21,11 @@ describe('Validator', () => {
     });
 
     it('addValidator', () => {
-        const alias = 'alias';
-        const rules = {
-            field1: Joi.string(),
-            field2: Joi.number().required(),
-        };
+        const alias = 'field1';
+        const rules = Joi.string();
 
         this.validator.addValidator(alias, rules);
 
-        expect(this.validator._validators[alias]).to.be.eql(Joi.object(rules));
+        expect(this.validator._validators[alias]).to.be.eql(rules);
     });
 });

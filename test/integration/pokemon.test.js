@@ -169,7 +169,7 @@ describe('Pokemon', () => {
                 });
         });
 
-        const quantity = Math.floor(Math.random() * 50) + 2;
+        const quantity = Math.floor(Math.random() * 10) + 2;
         it('Basic multi', (done) => {
             const pokemon = pokemonPayload.basic[1];
             const data = pokemonPayload.cardData;
