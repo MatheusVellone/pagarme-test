@@ -24,7 +24,7 @@ const registerRoutes = (routes, prefix = '/') => {
     Object.keys(routes).forEach((routeKey) => {
         if (typeof routes[routeKey] === 'object') {
             // routeKey is a route group prefix
-            registerRoutes(routes[routeKey], prefix + routeKey);
+            registerRoutes(routes[routeKey], `${prefix}${routeKey}/`);
         } else {
             // routeKey is the VERB and path
             const handler = routes[routeKey];
