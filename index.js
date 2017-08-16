@@ -20,11 +20,11 @@ const app = express();
 // Porta do express carregada via variavel de ambiente. Default = 3000
 const PORT = process.env.PORT || 3000;
 
-const registerRoutes = (routes, prefix = '/') => {
+const registerRoutes = (routes, prefix = '') => {
     Object.keys(routes).forEach((routeKey) => {
         if (typeof routes[routeKey] === 'object') {
             // routeKey is a route group prefix
-            registerRoutes(routes[routeKey], `${prefix}${routeKey}/`);
+            registerRoutes(routes[routeKey], `${prefix}/${routeKey}`);
         } else {
             // routeKey is the VERB and path
             const handler = routes[routeKey];
